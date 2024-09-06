@@ -41,4 +41,21 @@ class CadenaService(
     fun getIngresosTotales() : Double {
         return supermercadoRepository.findAll().sumOf { supermercadoService.getIngresosPorSupermercado(it.id) }
     }
+
+    /**
+     * Obtiene el supermercado con mayores ingresos.
+     *
+     * Este método busca el supermercado con los ingresos más altos y devuelve una cadena
+     * de texto con el nombre del supermercado, su ID y sus ingresos totales.
+     *
+     * @return Una cadena con el nombre del supermercado, su ID y los ingresos totales.
+     * @throws Exception Si no se encuentran supermercados.
+     */
+    fun getSupermercadoTopIngresos() : String {
+        val supermercado = supermercadoRepository.findAll()
+            .maxByOrNull { supermercadoService.getIngresosPorSupermercado(it.id) } ?: throw Exception("No se encontraron supermercados")
+
+        return "${supermercado.nombre} (${supermercado.id}). Ingresos totales: ${supermercadoService.getIngresosPorSupermercado(supermercado.id)}"
+
+    }
 }

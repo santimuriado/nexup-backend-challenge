@@ -23,4 +23,10 @@ class CadenaSuperController(private val cadenaService: CadenaService) {
         val ingresosTotales = cadenaService.getIngresosTotales()
         return ResponseEntity.status(HttpStatus.OK).body(ingresosTotales)
     }
+
+    @GetMapping("/supermercadoTopIngresos")
+    fun getSupermercadoTopIngresos() : ResponseEntity<String> {
+        val supermercadoTop = cadenaService.getSupermercadoTopIngresos()
+        return ResponseEntity.status(HttpStatus.OK).body(supermercadoTop)
+    }
 }

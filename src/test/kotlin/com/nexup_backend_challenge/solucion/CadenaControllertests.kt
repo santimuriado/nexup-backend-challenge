@@ -28,4 +28,12 @@ class CadenaControllertests(@Autowired val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andExpect(MockMvcResultMatchers.content().string("406.25"))
     }
+
+    @Test
+    fun `devuelve el supermercado con mas ingresos`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/cadena/supermercadoTopIngresos"))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.content().string("Supermercado Norte (2). Ingresos totales: 188.75"))
+    }
 }
