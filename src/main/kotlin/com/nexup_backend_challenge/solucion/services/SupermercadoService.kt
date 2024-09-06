@@ -1,5 +1,9 @@
 package com.nexup_backend_challenge.solucion.services
 
+import com.nexup_backend_challenge.solucion.exceptions.ProductoNoDisponibleException
+import com.nexup_backend_challenge.solucion.exceptions.ProductoNotFoundException
+import com.nexup_backend_challenge.solucion.exceptions.StockInsuficienteException
+import com.nexup_backend_challenge.solucion.exceptions.SupermercadoNotFoundException
 import com.nexup_backend_challenge.solucion.repositories.ProductoRepository
 import com.nexup_backend_challenge.solucion.repositories.StockRepository
 import com.nexup_backend_challenge.solucion.repositories.SupermercadoRepository
@@ -15,12 +19,12 @@ class SupermercadoService(
 
     fun registrarVenta(idSupermercado: Long, idProducto: Long, cantidad: Int) : Double {
 
-        val supermercado = supermercadoRepository.findById(idSupermercado).orElseThrow { Exception("Supermercado no encontrado") }
-        val producto = productoRepository.findById(idProducto).orElseThrow { Exception("Producto no encontrado") }
+        val supermercado = supermercadoRepository.findById(idSupermercado).orElseThrow { SupermercadoNotFoundException("Supermercado no encontrado") }
+        val producto = productoRepository.findById(idProducto).orElseThrow { ProductoNotFoundException("Producto no encontrado") }
 
-        val stock = stockRepository.findBySupermercadoAndProducto(supermercado,producto) ?: throw Exception("Producto no disponible en este Supermercado")
+        val stock = stockRepository.findBySupermercadoAndProducto(supermercado,producto) ?: throw ProductoNoDisponibleException("Producto no disponible en este Supermercado")
 
-        if(stock.cantidad < cantidad) throw Exception("Stock insuficiente")
+        if(stock.cantidad < cantidad) throw StockInsuficienteException("Stock insuficiente")
 
         stock.cantidadVendida += cantidad
         stock.cantidad -= cantidad
