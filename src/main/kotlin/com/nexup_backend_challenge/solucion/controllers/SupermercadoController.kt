@@ -1,0 +1,21 @@
+package com.nexup_backend_challenge.solucion.controllers
+
+import com.nexup_backend_challenge.solucion.services.SupermercadoService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+
+
+@RestController
+@RequestMapping("/api/supermercado")
+class SupermercadoController (private val supermercadoService: SupermercadoService) {
+
+    @PostMapping("/{idSupermercado}/productos/{idProducto}/vender")
+    fun registrarVenta(@PathVariable idSupermercado: Long,
+                       @PathVariable idProducto: Long,
+                       @RequestParam cantidad: Int) : ResponseEntity<Double> {
+        val valorVenta = supermercadoService.registrarVenta(idSupermercado,idProducto,cantidad);
+        return ResponseEntity.status(HttpStatus.OK).body(valorVenta);
+    }
+
+}
