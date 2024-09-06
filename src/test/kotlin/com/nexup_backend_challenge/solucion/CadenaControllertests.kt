@@ -36,4 +36,15 @@ class CadenaControllertests(@Autowired val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andExpect(MockMvcResultMatchers.content().string("Supermercado Norte (2). Ingresos totales: 188.75"))
     }
+
+    @Test
+    fun `devuelve supermercados abiertos`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/cadena/abierto")
+                .param("diaDeLaSemana", "lunes")
+                .param("hora", "10:00:01"))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.content().string("Supermercado Central (1), Supermercado Norte (2)"))
+    }
+
 }

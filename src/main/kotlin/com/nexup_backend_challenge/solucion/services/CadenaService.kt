@@ -3,6 +3,7 @@ package com.nexup_backend_challenge.solucion.services
 import com.nexup_backend_challenge.solucion.repositories.StockRepository
 import com.nexup_backend_challenge.solucion.repositories.SupermercadoRepository
 import org.springframework.stereotype.Service
+import java.time.LocalTime
 
 @Service
 class CadenaService(
@@ -57,5 +58,24 @@ class CadenaService(
 
         return "${supermercado.nombre} (${supermercado.id}). Ingresos totales: ${supermercadoService.getIngresosPorSupermercado(supermercado.id)}"
 
+    }
+
+    /**
+     * Obtiene los supermercados abiertos en un día y hora específicos.
+     *
+     * Este método filtra los supermercados que están abiertos en un día de la semana y
+     * hora específicos, y devuelve una lista de nombres e IDs de los supermercados abiertos.
+     *
+     * @param diaDeLaSemana El día de la semana en que se desea consultar los supermercados abiertos (en formato de texto).
+     * @param hora La hora a la que se desea consultar los supermercados abiertos.
+     * @return Una cadena de texto con los nombres e IDs de los supermercados abiertos, separados por comas.
+     */
+    fun getSupermercadosAbiertos(diaDeLaSemana: String, hora: LocalTime) : String {
+        val supermercadosAbiertos = supermercadoRepository.findAll().filter { supermercado ->
+            supermercado.diaAbierto.contains(diaDeLaSemana.uppercase()) &&
+                    hora.isAfter(supermercado.horarioApertura) &&
+                    hora.isBefore(supermercado.horarioCierre)
+        }
+        return supermercadosAbiertos.joinToString (", ") { supermercado -> "${supermercado.nombre} (${supermercado.id})" }
     }
 }

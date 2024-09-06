@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalTime
 
 
 @RestController
@@ -28,5 +30,13 @@ class CadenaSuperController(private val cadenaService: CadenaService) {
     fun getSupermercadoTopIngresos() : ResponseEntity<String> {
         val supermercadoTop = cadenaService.getSupermercadoTopIngresos()
         return ResponseEntity.status(HttpStatus.OK).body(supermercadoTop)
+    }
+
+    @GetMapping("/abierto")
+    fun getSupermercadosAbiertos(@RequestParam diaDeLaSemana: String, @RequestParam hora: String) : ResponseEntity<String> {
+        val horaLocal = LocalTime.parse(hora)
+        val supermercadosAbiertos = cadenaService.getSupermercadosAbiertos(diaDeLaSemana,horaLocal)
+
+        return ResponseEntity.status(HttpStatus.OK).body(supermercadosAbiertos)
     }
 }
