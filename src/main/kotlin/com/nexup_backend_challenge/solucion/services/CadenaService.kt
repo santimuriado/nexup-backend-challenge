@@ -1,11 +1,14 @@
 package com.nexup_backend_challenge.solucion.services
 
 import com.nexup_backend_challenge.solucion.repositories.StockRepository
+import com.nexup_backend_challenge.solucion.repositories.SupermercadoRepository
 import org.springframework.stereotype.Service
 
 @Service
 class CadenaService(
-    private val stockRepository: StockRepository
+    private val stockRepository: StockRepository,
+    private val supermercadoRepository: SupermercadoRepository,
+    private val supermercadoService: SupermercadoService
 ) {
 
     /**
@@ -25,5 +28,17 @@ class CadenaService(
             .take(5)
 
         return productos.joinToString(separator = " - ") { "${it.first.nombre}: ${it.second}" }
+    }
+
+    /**
+     * Calcula los ingresos totales generados por todos los supermercados.
+     *
+     * Este método suma los ingresos de todos los supermercados, obteniendo los ingresos
+     * de cada uno a través de la función `getIngresosPorSupermercado`.
+     *
+     * @return El total de ingresos generados por todos los supermercados.
+     */
+    fun getIngresosTotales() : Double {
+        return supermercadoRepository.findAll().sumOf { supermercadoService.getIngresosPorSupermercado(it.id) }
     }
 }
