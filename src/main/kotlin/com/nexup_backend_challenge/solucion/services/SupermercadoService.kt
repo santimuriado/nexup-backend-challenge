@@ -52,4 +52,18 @@ class SupermercadoService(
 
         return stock.cantidadVendida;
     }
+
+    fun getIngresosProducto(idSupermercado: Long,idProducto: Long): Double {
+
+        /* Busco Supermercado por ID */
+        val supermercado = supermercadoRepository.findById(idSupermercado).orElseThrow { SupermercadoNotFoundException("Supermercado no encontrado") }
+
+        /* Busco Producto por ID */
+        val producto = productoRepository.findById(idProducto).orElseThrow { ProductoNotFoundException("Producto no encontrado") }
+
+        /* Busco si el supermercado tiene al producto */
+        val stock = stockRepository.findBySupermercadoAndProducto(supermercado,producto) ?: throw ProductoNoDisponibleException("Producto no disponible en este Supermercado")
+
+        return stock.cantidadVendida * producto.precio;
+    }
 }

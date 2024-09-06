@@ -82,5 +82,13 @@ class SupermercadoControllerTests (@Autowired val mockMvc: MockMvc) {
             .andExpect(MockMvcResultMatchers.content().string("Producto no disponible en este Supermercado"))
     }
 
+    @Test
+    fun `devuelve ingresos de un producto en un supermercado`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/supermercado/1/productos/3/ingresosProducto"))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.content().string("19.0"))
+    }
+
 }
 
