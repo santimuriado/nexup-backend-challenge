@@ -50,5 +50,37 @@ class SupermercadoControllerTests (@Autowired val mockMvc: MockMvc) {
             .andExpect(MockMvcResultMatchers.content().string("Stock insuficiente"))
     }
 
+    @Test
+    fun `devuelve cantidad vendida de un producto en un supermercado`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/supermercado/1/productos/4/cantidadVendida"))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.content().string("5"))
+    }
+
+    @Test
+    fun `devuelve cantidad vendida de un producto en un supermercado inexistente`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/supermercado/123/productos/4/cantidadVendida"))
+            .andExpect(status().isNotFound)
+            .andExpect(MockMvcResultMatchers.content().string("Supermercado no encontrado"))
+    }
+
+    @Test
+    fun `devuelve cantidad vendida de un producto inexistente en un supermercado`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/supermercado/1/productos/312/cantidadVendida"))
+            .andExpect(status().isNotFound)
+            .andExpect(MockMvcResultMatchers.content().string("Producto no encontrado"))
+    }
+
+    @Test
+    fun `devuelve cantidad vendida de un producto que no existe en este supermercado`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/supermercado/1/productos/7/cantidadVendida"))
+            .andExpect(status().isNotFound)
+            .andExpect(MockMvcResultMatchers.content().string("Producto no disponible en este Supermercado"))
+    }
+
 }
 

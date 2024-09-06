@@ -19,11 +19,16 @@ class SupermercadoService(
 
     fun registrarVenta(idSupermercado: Long, idProducto: Long, cantidad: Int) : Double {
 
+        /* Busco Supermercado por ID */
         val supermercado = supermercadoRepository.findById(idSupermercado).orElseThrow { SupermercadoNotFoundException("Supermercado no encontrado") }
+
+        /* Busco Producto por ID */
         val producto = productoRepository.findById(idProducto).orElseThrow { ProductoNotFoundException("Producto no encontrado") }
 
+        /* Busco si el supermercado tiene al producto */
         val stock = stockRepository.findBySupermercadoAndProducto(supermercado,producto) ?: throw ProductoNoDisponibleException("Producto no disponible en este Supermercado")
 
+        /* Veo si hay stock */
         if(stock.cantidad < cantidad) throw StockInsuficienteException("Stock insuficiente")
 
         stock.cantidadVendida += cantidad
@@ -34,5 +39,17 @@ class SupermercadoService(
 
     }
 
+    fun getCantidadVendida(idSupermercado: Long, idProducto: Long) : Int {
 
+        /* Busco Supermercado por ID */
+        val supermercado = supermercadoRepository.findById(idSupermercado).orElseThrow { SupermercadoNotFoundException("Supermercado no encontrado") }
+
+        /* Busco Producto por ID */
+        val producto = productoRepository.findById(idProducto).orElseThrow { ProductoNotFoundException("Producto no encontrado") }
+
+        /* Busco si el supermercado tiene al producto */
+        val stock = stockRepository.findBySupermercadoAndProducto(supermercado,producto) ?: throw ProductoNoDisponibleException("Producto no disponible en este Supermercado")
+
+        return stock.cantidadVendida;
+    }
 }
