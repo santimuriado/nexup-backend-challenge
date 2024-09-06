@@ -90,5 +90,12 @@ class SupermercadoControllerTests (@Autowired val mockMvc: MockMvc) {
             .andExpect(MockMvcResultMatchers.content().string("19.0"))
     }
 
+    @Test
+    fun `devuelve ingresos de un supermercado`() {
+        mockMvc.perform(
+            MockMvcRequestBuilders.get("/api/supermercado/3/ingresos"))
+            .andExpect(status().isOk)
+            .andExpect(MockMvcResultMatchers.content().string("130.0"))
+    }
 }
 

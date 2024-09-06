@@ -32,4 +32,10 @@ class SupermercadoController (private val supermercadoService: SupermercadoServi
         return ResponseEntity.status(HttpStatus.OK).body(ingresosProducto)
     }
 
+    @GetMapping("/{idSupermercado}/ingresos")
+    fun getIngresosPorSupermercado(@PathVariable idSupermercado: Long) : ResponseEntity<Double> {
+        val ingresosPorSupermercado = supermercadoService.getIngresosPorSupermercado(idSupermercado)
+        return ResponseEntity.status(HttpStatus.OK).body(ingresosPorSupermercado)
+    }
+
 }

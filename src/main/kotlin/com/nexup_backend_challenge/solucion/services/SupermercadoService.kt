@@ -106,4 +106,20 @@ class SupermercadoService(
 
         return stock.cantidadVendida * producto.precio;
     }
+
+    /**
+     * Calcula los ingresos totales generados por todas las ventas en un supermercado específico.
+     *
+     * Este método suma los ingresos de todos los productos vendidos en un supermercado, calculando
+     * el total de unidades vendidas por el precio de cada producto en su stock.
+     *
+     * @param idSupermercado El ID del supermercado del cual se desean conocer los ingresos totales.
+     * @return El total de ingresos generados por las ventas en el supermercado.
+     * @throws SupermercadoNotFoundException Si el supermercado con el ID dado no existe.
+     */
+    fun getIngresosPorSupermercado(idSupermercado: Long) : Double {
+
+        val supermercado = supermercadoRepository.findById(idSupermercado).orElseThrow { SupermercadoNotFoundException("Supermercado no encontrado") }
+        return supermercado.stock.sumOf { it.cantidadVendida * it.producto.precio }
+    }
 }
