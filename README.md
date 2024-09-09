@@ -1,78 +1,41 @@
-# Nexup Backend Challenge
+# Proyecto: Cadena de Supermercados
 
-En este repositorio, se encuentra la prueba técnica para el puesto de Backend Developer en Nexup.
+## Descripción
 
-Este challenge está diseñado para evaluar tus habilidades de Kotlin y resolución de problemas.
+Este proyecto implementa una solución para gestionar una cadena de supermercados, permitiendo llevar un control sobre la venta de productos, el stock y los ingresos. Además, incluye funcionalidades para consultar los productos más vendidos y los supermercados con mayores ingresos.
+La aplicación está construida utilizando Kotlin como lenguaje de programación, con el framework Spring Boot para la creación de servicios REST. La base de datos utilizada es H2 en memoria, lo que facilita la ejecución de pruebas sin depender de una base de datos externa.
 
-## Problema a resolver
+## Funcionalidades
+### Supermercado
+Registrar una venta de un producto: Permite registrar la venta de un producto específico, actualizando el stock disponible y registrando los ingresos.  
+Obtener la cantidad vendida de un producto: Devuelve la cantidad de unidades vendidas de un producto específico en un supermercado.  
+Obtener ingresos por ventas de un producto: Devuelve el monto total de ingresos obtenidos por la venta de un producto.  
+Obtener ingresos totales: Devuelve los ingresos totales de todas las ventas realizadas en un supermercado.  
 
-Crear las clases y funciones necesarias para resolver el siguiente problema:
-- Se tiene una **cadena de supermercados**
-- Se tienen **productos**, cada uno con un ID único, nombre y precio
-- Se tienen **supermercados**, cada uno con un ID único, nombre, un listado de productos y el stock asociado a cada uno (el stock puede variar entre los distintos supermercados)
-    - Los supermercados comparten los distintos productos
+### Cadena de Supermercados
 
-- Funcionalidades requeridas para cada _supermercado_:
-  - Registrar una venta de un producto
-    - Dado un ID de producto y una cantidad a vender, se debe registrar la venta de un producto
-    - La función debe retornar el precio total de la venta
-  - Obtener la cantidad vendida de un producto
-    - Dado un ID de producto, retornar la cantidad vendida de dicho producto
-  - Obtener ingresos por ventas de un producto
-    - Dado un ID de producto, retornar el dinero obtenido de las ventas de dicho producto
-  - Obtener ingresos totales
-    - Retornar el dinero total obtenido de todas las ventas realizadas
+Obtener los 5 productos más vendidos: Devuelve una lista con los cinco productos más vendidos en toda la cadena de supermercados.  
+Obtener ingresos totales: Devuelve los ingresos totales obtenidos de todas las ventas realizadas en toda la cadena de supermercados.  
+Obtener el supermercado con mayor cantidad de ingresos por ventas: Devuelve el supermercado con más ingresos totales, junto con su ID y el monto total.  
 
-- Funcionalidades requeridas para la _cadena de supermercados_:
-  - Obtener los 5 productos más vendidos
-    - Buscar los 5 productos más vendidos en toda la cadena  
-    - Retornar un _string_ con el formato `<nombre_producto>: cantidad_vendida`, concatenados con un guión
-  - Obtener ingresos totales
-    - Retornar el dinero total obtenido de todas las ventas realizadas en toda la cadena
-  - Obtener el supermercado con mayor cantidad de ingresos por ventas
-    - Retornar un _string_ con el formato `<nombre_supermercado> (<id>). Ingresos totales: <ingresos>`
- 
-Para cada una de las funcionalidades planteadas:
-- Definir los nombres de las funciones, parámetros y demás datos cómo consideres adecuado
-- Documentar y comentar el código dónde consideres necesario
-- Manejar todos los casos de error que consideres necesarios
-- Agregar todos los tests que consideres necesarios
+### Funcionalidad Opcional
 
-### Objetivo opcional
+Supermercados abiertos según horario: Dado un día y hora, devuelve una lista de los supermercados que están abiertos en ese momento.
 
-Se desea manejar para cada supermercado su hora de apertura y cierre, así cómo los días donde se encuentra abierto. Agregar los datos necesarios para manejar dicha información.
+## Tecnologías Utilizadas
+Kotlin: Lenguaje de programación principal.  
+Spring Boot: Framework para crear la API REST.  
+H2 Database: Base de datos en memoria utilizada para pruebas y almacenamiento temporal de datos.  
+JUnit y Mockito: Para la creación y ejecución de pruebas unitarias e integrales.  
 
-Sobre la cadena de supermercados, agregar una funcionalidad que, dado un cierto día y horario, se pueda obtener la lista de supermercados abiertos en ese momento.
-Se espera obtener la respuesta como un _string_ con el formato `<nombre_supermercado> (<id>)`, y se concatenen con una coma.
+## Estructura del Proyecto
+Modelos: Definición de las entidades Producto, Supermercado, y Stock, que representan los datos del sistema.  
+Servicios: Implementación de la lógica de negocio para gestionar las ventas, el stock y los ingresos.  
+Repositorios: Interfaces que extienden JpaRepository para interactuar con la base de datos H2.  
+Controladores: Exponen los servicios como endpoints REST para ser consumidos a través de peticiones HTTP.  
+Excepciones personalizadas: Para manejar los diferentes errores, como SupermercadoNotFoundException, ProductoNotFoundException, y StockInsuficienteException.  
 
-
-## Pasos a seguir:
-1. Clone este repositorio en su máquina local usando Git.
-   ```bash
-   git clone https://gitlab.com/nexup/nexup-backend-challenge.git
-   ```
-2. Crea un repositorio vacío en tu cuenta de GitHub con el mismo nombre de este.
-   ```bash
-    nexup-backend-challenge
-   ```
-3. Muevesé a la carpeta del proyecto.
-   ```bash
-   cd ./nexup-backend-challenge
-   ```
-4. Cambia la URL remota del repositorio clonado de GitHub, por la URL de tu repositorio.
-   ```bash
-   git remote set-url origin <tu-repositorio.git>
-   ```
-5. Sube el código a tu repositorio.
-
-## Recomendaciones
-- **No** hagas un _fork_ de este repositorio.
-- **No** hagas _push_ directamente a este repositorio.
-- Crea un commit por cada cambio que realices. Utiliza mensajes **claros** y **descriptivos** para documentar tu proceso.
-- No es necesario el uso de base de datos ni archivos para manejar los datos de prueba. Podes utilizar estructuras de datos en memoria.
-- Dentro del proyecto se encuentra un archivo de ejemplo para ejecución de las pruebas, modificarlo como sea necesario para adaptarlo al problema.
-  - En el archivo de pruebas se encuentra un ejemplo de datos a usar en la ejecución de los Tests
-
-## Entregables
-- Un enlace a un repositorio de GitHub con el código resolviendo el problema planteado.
-- Opcional: Un archivo README con explicaciones sobre el enfoque utilizado y cualquier otra información relevante.
+## Enfoque Utilizado
+Diseño de la lógica de negocio: Se diseñó un servicio para cada supermercado que administra las ventas, el stock y los ingresos. La lógica se encapsuló en métodos específicos dentro de las clases de servicio.  
+Simulación de la base de datos: Usamos una base de datos en memoria (H2) para almacenar los productos, supermercados y el stock. Esto permitió una configuración más sencilla para las pruebas.  
+Validación de datos y manejo de excepciones: Cada operación verifica la existencia de los recursos (supermercado, producto) antes de continuar. Si un recurso no existe, se lanza una excepción personalizada con el mensaje adecuado.  
