@@ -22,6 +22,19 @@ Obtener el supermercado con mayor cantidad de ingresos por ventas: Devuelve el s
 
 Supermercados abiertos según horario: Dado un día y hora, devuelve una lista de los supermercados que están abiertos en ese momento.
 
+## Endpoints
+- POST /api/supermercado/{idSupermercado}/productos/{idProducto}/vender: Registra la venta de un producto en un supermercado. Se pasa la cantidad del producto como queryParam.
+- GET /api/supermercado/{idSupermercado}/productos/{idProducto}/cantidadVendida: Devuelve la cantidad vendida de un producto en un supermercado.
+- GET /api/supermercado/{idSupermercado}/productos/{idProducto}/ingresosProducto: Devuelve el total de ingresos generados por la venta del producto en el supermercado.
+- GET /api/supermercado/{idSupermercado}/ingresos : Devuelve el total de ingresos generados por las ventas en el supermercado.
+
+- GET /api/cadena/top5Productos: Devuelve los 5 productos más vendidos en toda la cadena.
+- GET /api/cadena/ingresosTotales : Devuelve el total de ingresos generados por todos los supermercados.
+- GET /api/cadena/supermercadoTopIngresos: Devuelve el supermercado con más ingresos.
+
+### Endpoint del objetivo opcional
+- GET /api/cadena/abierto : Devuelve una cadena de texto con los nombres e IDs de los supermercados abiertos, separados por comas.
+
 ## Tecnologías Utilizadas
 Kotlin: Lenguaje de programación principal.  
 Spring Boot: Framework para crear la API REST.  
